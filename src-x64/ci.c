@@ -33,7 +33,7 @@ double exactci_c(const double* predictions, const double* observations, R_len_t 
 //Equal-prediction Adjusted Concordance Index
 double equalci_c(const double* predictions, const double* observations, R_len_t n)
 {
-	int pos_score = 0, neg_score = 0, i, j;
+	int pos_score = 0, count = 0, i, j;
 	double c;
 	for(i = 0; i < n-1; i++){	//Only go through the triangle
 	  	for(j = i+1; j < n; j++){
@@ -41,31 +41,24 @@ double equalci_c(const double* predictions, const double* observations, R_len_t 
 	  		//Case: j>i, i dead
 	  		if((observations[n + i] == 1) && (observations[j] > observations[i])){ 
 	  			if(observations[i] < observations[j]) {
+	  				count +=2;
 	  				if( (predictions[i] > predictions[j]) ) pos_score += 2;	//concordant pair
-	  				if( (predictions[i] < predictions[j]) ) neg_score += 2;	//disconcordant pair
-	  				if( (predictions[i] == predictions[j])){ 
-	  					pos_score += 1;										//score balancing
-	  					neg_score += 1;
-	  				}
-
+	  				if( (predictions[i] == predictions[j])) pos_score += 1; //score balancing
 	  			}
 			}
 
 			//Case: i>j, j dead
 			if((observations[n + j] == 1) && (observations[i] > observations[j])){
 	  			if(observations[i] > observations[j]) {
-	  				if( (predictions[i] < predictions[j]) ) pos_score += 2;
-	  				if( (predictions[i] > predictions[j]) ) neg_score += 2;
-	  				if( (predictions[i] == predictions[j])){ 
-	  					pos_score += 1;
-	  					neg_score += 1;
-	  				}
+	  				count +=2;
+	  				if( (predictions[i] < predictions[j]) ) pos_score += 2;	//concordant pair
+	  				if( (predictions[i] == predictions[j])) pos_score += 1; //score balancing
 	  			}
 			}
 
 		}//end of for j
 	  }//end of for i
-	c = (double) pos_score/(pos_score+neg_score);
+	c = (double) pos_score/(count);
 	return c;
 }
 
