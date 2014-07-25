@@ -1,5 +1,5 @@
 
-ci = function(predictions, observations){
+exactci = function(predictions, observations){
 	out = .Call("exactciR2C", predictions, observations)
 	return (out); 
 }

@@ -1,9 +1,13 @@
 useDynLib(gislkit)
 export(
-	loadExpr,	#
-	loadClin,	#
-	getMI,		#
-	getAllMIWz,	#
-	ci,			#
-	equalci
+	loadExpr,		#
+	loadClin,		#
+	getMI,			#
+	getAllMIWz,		#
+	equalci,		#
+	exactci,		#
+	bac,			#
+	findThreshold,	#
+	fitTime,		#
+	mapScore
 )
