@@ -36,6 +36,7 @@ fitTime<-function( prediction, known_survival,halfwindow=5, doPlot=FALSE, increm
 
 		smooth_table<-rep(0, length(pred_scoring))
 		for(i in 1:length(pred_scoring)){
+
 			larger=as.numeric(names(which(prediction_d_sorted<pred_scoring[i])))
 			if(length(larger)>halfwindow)
 				larger=larger[(length(larger)-(halfwindow-1)):length(larger)]
@@ -46,12 +47,9 @@ fitTime<-function( prediction, known_survival,halfwindow=5, doPlot=FALSE, increm
 				}else{
 					smaller=smaller[1:halfwindow]
 				}
-
-			if(is.na(smaller)==TRUE)
-				smaller=NULL
 				
 			cat(i, "length", length(larger),length(smaller),"\n"  )
-			smooth_table[i]=mean(c(smaller,larger))
+			smooth_table[i]=mean(c(smaller,larger), na.rm=TRUE)
 		}
 
 		pred_scoring_rank =rank(pred_scoring) 
@@ -73,7 +71,7 @@ fitTime<-function( prediction, known_survival,halfwindow=5, doPlot=FALSE, increm
 
 	if(doPlot==TRUE){
 		plot(pred_scoring, predicted_survival, main="Fitted Survival", cex.main=0.7,
-				xlab= "-1*Predicted Score (Survival)", ylab= "Survival (Week)", col=4, pch=20, cex=0.6)
+				xlab= "Predicted Score", ylab= "Survival", col=4, pch=20, cex=0.6)
 	}
 
 	return(predicted_survival)
