@@ -9,5 +9,8 @@ export(
 	bac,			#
 	findThreshold,	#
 	fitTime,		#
-	mapScore
+	mapScore,		#
+	cv.svm,			#
+	cv.cox,			#
+	cv.gbm
 )
