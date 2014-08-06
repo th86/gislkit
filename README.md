@@ -3,7 +3,7 @@ gislkit
 
 Download this package from https://github.com/th86/gislkit
 
-uncompress this package gislkit-master.zip as a directory
+Uncompress this package gislkit-master.zip as a directory
 
 Open R and install this package* as the following
 
