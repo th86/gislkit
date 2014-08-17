@@ -12,7 +12,7 @@ cv.svm <- function(data, iterations=100, useFULL=FALSE, fold=0.75, kernel = "lin
 	ci_list=rep(0,iterations)
 	for(iter in 1:iterations){
 
-		if(useFULL==TRUE){
+		if(useFULL==FALSE){
 	    	trainSet=data[sample(rownames(data), floor(nrow(data)*fold)),]
 	    	testSet=data[setdiff(rownames(data),rownames(trainSet)),]
 	 	}else{
@@ -33,7 +33,7 @@ cv.cox <- function(data, iterations=100, useFULL=FALSE, fold=0.75) {
 	ci_list=rep(0,iterations)
 	for(iter in 1:iterations){
 
-		if(useFULL==TRUE){
+		if(useFULL==FALSE){
 	    	trainSet=data[sample(rownames(data), floor(nrow(data)*fold)),]
 	    	testSet=data[setdiff(rownames(data),rownames(trainSet)),]
 	 	}else{

@@ -26,22 +26,22 @@ findThreshold<-function( prediction, response, sweep_max=2, resolution=10000, do
 }
 
 #To fit the predicted ranks to the known survival information
-fitTime<-function( prediction, known_survival,halfwindow=5, doPlot=FALSE, increment=0.1  ){
+fitTime<-function( prediction, prediction_known ,known_survival,halfwindow=5, doPlot=FALSE, increment=0.1  ){
 		idx=which(known_survival[,2]==1)
-		prediction_d=prediction[idx]
+		prediction_d=prediction_known[idx]
 		known_survival_d=known_survival[idx,]
 
 		names(prediction_d)=known_survival_d[,1]
 		prediction_d_sorted=sort(prediction_d)
 
-		smooth_table<-rep(0, length(pred_scoring))
-		for(i in 1:length(pred_scoring)){
+		smooth_table<-rep(0, length(prediction))
+		for(i in 1:length(prediction)){
 
-			larger=as.numeric(names(which(prediction_d_sorted<pred_scoring[i])))
+			larger=as.numeric(names(which(prediction_d_sorted<prediction[i])))
 			if(length(larger)>halfwindow)
 				larger=larger[(length(larger)-(halfwindow-1)):length(larger)]
 
-			smaller=as.numeric(names(which(prediction_d_sorted>pred_scoring[i])))
+			smaller=as.numeric(names(which(prediction_d_sorted>prediction[i])))
 			if(length(smaller)<halfwindow){
 					smaller=smaller[1:length(smaller)]
 				}else{
@@ -52,8 +52,8 @@ fitTime<-function( prediction, known_survival,halfwindow=5, doPlot=FALSE, increm
 			smooth_table[i]=mean(c(smaller,larger), na.rm=TRUE)
 		}
 
-		pred_scoring_rank =rank(pred_scoring) 
-		pred_scoring_sorted=sort(pred_scoring)
+		pred_scoring_rank =rank(prediction) 
+		pred_scoring_sorted=sort(prediction)
 		smooth_table_sorted=sort(smooth_table)
 
 		for(i in 1:length(pred_scoring_sorted) )
