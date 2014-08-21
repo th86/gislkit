@@ -12,5 +12,6 @@ export(
 	mapScore,		#
 	cv.svm,			#
 	cv.cox,			#
-	cv.gbm
+	cv.gbm,			#
+	direction.correction
 )
