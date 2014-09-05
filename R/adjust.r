@@ -27,52 +27,47 @@ findThreshold<-function( prediction, response, sweep_max=2, resolution=10000, do
 
 #To fit the predicted ranks to the known survival information
 fitTime<-function( prediction, prediction_known ,known_survival,halfwindow=5, doPlot=FALSE, increment=0.1  ){
-		idx=which(known_survival[,2]==1)
-		prediction_d=prediction_known[idx]
-		known_survival_d=known_survival[idx,]
-
-		names(prediction_d)=known_survival_d[,1]
-		prediction_d_sorted=sort(prediction_d)
-
-		smooth_table<-rep(0, length(prediction))
-		for(i in 1:length(prediction)){
-
-			larger=as.numeric(names(which(prediction_d_sorted<prediction[i])))
-			if(length(larger)>halfwindow)
-				larger=larger[(length(larger)-(halfwindow-1)):length(larger)]
-
-			smaller=as.numeric(names(which(prediction_d_sorted>prediction[i])))
-			if(length(smaller)<halfwindow){
-					smaller=smaller[1:length(smaller)]
-				}else{
-					smaller=smaller[1:halfwindow]
-				}
-				
-			cat(i, "length", length(larger),length(smaller),"\n"  )
-			smooth_table[i]=mean(c(smaller,larger), na.rm=TRUE)
-		}
-
-		pred_scoring_rank =rank(prediction) 
-		pred_scoring_sorted=sort(prediction)
-		smooth_table_sorted=sort(smooth_table)
-
-		for(i in 1:length(pred_scoring_sorted) )
-			if(i>1)
-				if( pred_scoring_sorted[i]<=pred_scoring_sorted[i-1]        )
-					 smooth_table_sorted[i]=smooth_table_sorted[i-1]+increment
+ idx = which(known_survival[, 2] == 1)
+    prediction_d = prediction_known[idx]
+    known_survival_d = known_survival[idx, ]
+    names(prediction_d) = known_survival_d[, 1]
+    prediction_d_sorted = sort(prediction_d)
+    smooth_table <- rep(0, length(prediction))
+    for (i in 1:length(prediction)) {
+        larger = as.numeric(names(which(prediction_d_sorted < 
+            prediction[i])))
+        if (length(larger) > halfwindow) 
+            larger = larger[(length(larger) - (halfwindow - 1)):length(larger)]
+        smaller = as.numeric(names(which(prediction_d_sorted > 
+            prediction[i])))
+        if (length(smaller) < halfwindow) {
+            smaller = smaller[1:length(smaller)]
+        }
+        else {
+            smaller = smaller[1:halfwindow]
+        }
+        cat(i, "length", length(larger), length(smaller), "\n")
+        smooth_table[i] = mean(c(smaller, larger), na.rm = TRUE)
+    }
+    pred_scoring_rank = rank(prediction)
+    pred_scoring_sorted = sort(prediction)
+    smooth_table_sorted = sort(smooth_table)
 
 
-		for(i in 1:length(smooth_table_sorted) )
-			if(i>1)
-				if(smooth_table_sorted[i]<=smooth_table_sorted[i-1] )
-					smooth_table_sorted[i]=smooth_table_sorted[i-1]+increment
 
-	predicted_survival=smooth_table_sorted[pred_scoring_rank ]
+    predicted_survival = smooth_table_sorted[pred_scoring_rank]
 
-	if(doPlot==TRUE){
-		plot(pred_scoring, predicted_survival, main="Fitted Survival", cex.main=0.7,
-				xlab= "Predicted Score", ylab= "Survival", col=4, pch=20, cex=0.6)
-	}
 
-	return(predicted_survival)
+    for (i in 1:length(predicted_survival)) 
+    	if (i > 1) 
+    		if( length(which(predicted_survival==predicted_survival[i]))>1)
+    			predicted_survival[which(predicted_survival==predicted_survival[i])]= predicted_survival[which(predicted_survival==predicted_survival[i])]+increment*(1:length(which(predicted_survival==predicted_survival[i])))
+
+    if (doPlot == TRUE) {
+        plot(prediction, predicted_survival, main = "Fitted Survival", 
+            cex.main = 0.7, xlab = "Predicted Score", ylab = "Survival", 
+            col = 4, pch = 20, cex = 0.6)
+    }
+    return(predicted_survival)
 }
+
