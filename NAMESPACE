@@ -12,7 +12,9 @@ export(
 	mapScore,		#
 	cv.svm,			#
 	cv.cox,			#
+	cv.cox.equal,	#
 	cv.gbm,			#
 	direction.correction,	#
-	fs
+	fs,				#
+	readcsvmatrix
 )
