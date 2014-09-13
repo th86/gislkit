@@ -71,3 +71,61 @@ fitTime<-function( prediction, prediction_known ,known_survival,halfwindow=5, do
     return(predicted_survival)
 }
 
+#To fit the predicted ranks to the known survival information 
+fitTimeRank<-function( prediction, prediction_known ,known_survival, increment=0.01  ){
+ idx = which(known_survival[, 2] == 1)
+    prediction_d = prediction_known[idx]
+    known_survival_d = known_survival[idx, 1]
+    names(prediction_d) = known_survival_d
+
+    prediction_d_sorted = sort(prediction_d)
+    known_survival_d_sorted =sort(known_survival_d )
+
+    prediction.order=rank(prediction)
+    prediction=sort(prediction)
+
+
+    fittedTime=rep(0,length(prediction))
+
+    known_pred_idx=1
+    for(i in 1:length(prediction)){
+
+        if((prediction[i]<max(prediction_d_sorted))&&(prediction[i]>min(prediction_d_sorted))  ){
+
+        for(j in known_pred_idx:(length(prediction_d_sorted)-1) ) {
+            if( ( prediction[i] > prediction_d_sorted[j]  )&& (prediction[i]< prediction_d_sorted[j+1] )  ){
+                known_pred_idx= j  
+            }else{
+               
+            }
+        }
+
+        ratio= abs( (prediction_d_sorted[known_pred_idx+1]-prediction[i])/  (prediction_d_sorted[known_pred_idx+1]-prediction_d_sorted[known_pred_idx]) )
+        
+
+        fittedTime[i]=(known_survival_d_sorted[known_pred_idx+1]-known_survival_d_sorted[known_pred_idx])*ratio+known_survival_d_sorted[known_pred_idx]
+
+        #cat(i,fittedTime[i],"\n")        
+        }else{
+            if(prediction[i]>max(prediction_d_sorted)) {
+                fittedTime[i]=max(known_survival_d_sorted)+abs(increment*prediction[i])
+                cat("+",prediction[i],"\n")
+            }else{
+                fittedTime[i]=min(known_survival_d_sorted)-abs(increment*prediction[i])
+                cat("-",prediction[i],"\n")
+            }
+
+        }
+
+        #handle stranded predictions
+        if( (fittedTime[i]<=fittedTime[i-1]) && i>1) {
+                fittedTime[i]=fittedTime[i-1]+increment
+            }
+
+    }
+
+
+    fittedTime=fittedTime[ prediction.order]
+    return(fittedTime)
+}
+
