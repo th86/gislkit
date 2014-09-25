@@ -17,5 +17,9 @@ export(
 	cv.gbm,			#
 	direction.correction,	#
 	fs,				#
-	readcsvmatrix
+	csvmatrix.read,	#
+	biotab.read,	#
+	getGeneSymbols, #
+	attractorList.create,	#
+	meta.create
 )
