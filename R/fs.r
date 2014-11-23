@@ -1,4 +1,4 @@
-#Randomized Feature Selection
+#Randomized Feature Selection (Obsolete)
 fs<-function( e , remission, featureSet_next, maxIter=10000   ){
 
 	score_full_next=0

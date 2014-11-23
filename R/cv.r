@@ -29,36 +29,7 @@ cv.svm <- function(data, iterations=100, useFULL=FALSE, fold=0.75, kernel = "lin
 }
 
 
-cv.cox <- function(data, iterations=100, useFULL=FALSE, fold=0.75) {
-	ci_list=rep(0,iterations)
-	for(iter in 1:iterations){
-
-		if(useFULL==FALSE){
-	    	trainSet=data[sample(rownames(data), floor(nrow(data)*fold)),]
-	    	testSet=data[setdiff(rownames(data),rownames(trainSet)),]
-	 	}else{
-	 		trainSet=data
-	 		testSet=data	
-	 	}
-
-	    cox_model<-tryCatch({
-	     				coxph(Surv(time, cens) ~., data = trainSet, control = coxph.control(iter.max = 100))
-	     				},warning=function(w){
-	     				},error=function(e){
-	     					print(e)
-	     				},finally= {
-	     				})
-	    if(is.null(cox_model)==FALSE){
-		    cox_pred<-predict(cox_model, testSet)
-	    	pred=cox_pred
-	     	ci_list[iter]<-exactci(pred, Surv( testSet[,"time"],testSet[,"cens"]) )
-	    }
-	}
-    return(mean(ci_list,na.rm=TRUE) )
-}
-
-
-cv.cox.equal<-function (data, iterations = 100, useFULL = FALSE, fold = 0.75) 
+cv.cox = function (data, iterations = 100, useFULL = FALSE, fold = 0.75) 
 {
     ci_list = rep(0, iterations)
     for (iter in 1:iterations) {
@@ -73,7 +44,7 @@ cv.cox.equal<-function (data, iterations = 100, useFULL = FALSE, fold = 0.75)
             testSet = data
         }
         cox_model <- tryCatch({
-            coxph(Surv(time, cens) ~ ., data = trainSet, control = coxph.control(iter.max = 100))
+            coxph(Surv(time, cens) ~ ., data = trainSet, control = coxph.control(iter.max = 100), ties="breslow")
         }, warning = function(w) {
         }, error = function(e) {
             print(e)
@@ -88,7 +59,6 @@ cv.cox.equal<-function (data, iterations = 100, useFULL = FALSE, fold = 0.75)
     }
     return(mean(ci_list, na.rm = TRUE))
 }
-
 
 cv.gbm <- function(data, iterations=10, useFULL=FALSE, fold=0.75, cv.folds=3,shrinkage=0.05) {
 	ci_list=rep(0,iterations)
