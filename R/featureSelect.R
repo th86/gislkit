@@ -74,10 +74,12 @@ summarizeFeatureSelect<-function(pattern=".rda",maxfeatureNumber=10){
 
 
 #Coefficient Optimization
-coefOptimize<-function(df,time,status,sd=1,maxIter=1000000){
+coefOptimize<-function(df,time,status,sd=1,maxIter=1000000,coef_prev=NULL){
 
-	coef_prev=rnorm(ncol(df))
-	ci_prev=equalci(aml[,featureSet_next]%*%coef_prev, Surv(time,status))
+	if(is.null(coef_prev)==TRUE)
+			coef_prev=rnorm(ncol(df))
+	
+	ci_prev=equalci(df%*%coef_prev, Surv(time,status))
 	coef_next=coef_prev
 	for(i in 1:maxIter){
 
@@ -89,11 +91,11 @@ coefOptimize<-function(df,time,status,sd=1,maxIter=1000000){
 	    #    coef_next[coef_select]=coef_prev[coef_select]-0.000001
 	    #}
 
-	    coef_next[coef_select]=coef_prev[coef_select] +rnorm(sd)
+	    coef_next[coef_select]=coef_prev[coef_select] +rnorm(1,mean=0,sd=sd)
 
 	    coef_next=coef_next/max(abs(coef_next))
 
-	    pred=aml[,featureSet_next]%*%coef_next
+	    pred=df%*%coef_next
 	    ci_next=equalci(pred, Surv(time,status))
 	    cat(i, ci_prev, ci_next, coef_select, coef_next,"\n")
 
