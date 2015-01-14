@@ -1,7 +1,7 @@
 #Import an MAF file as a matrix
 importMAF<-function(fn, col_loci="Hugo_Symbol",col_samples="Tumor_Sample_Barcode"){
 
-    maf<-read.table(fn,sep="\t", header=TRUE, comment.char="")
+    maf<-read.table(fn,sep="\t", header=TRUE, comment.char="", quote="")
     maf<-maf[,c(col_loci,col_samples)]
 
     mutationList<-as.character(unique(maf[,1]))
