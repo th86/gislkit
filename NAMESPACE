@@ -26,5 +26,6 @@ export(
 	batchFeatureSelect, #
 	summarizeFeatureSelect, #
 	coefOptimize, #
-	importTCGA 
+	importTCGA,	#
+	importMAF
 )
