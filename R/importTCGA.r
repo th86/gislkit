@@ -17,3 +17,11 @@ importTCGA<-function(path_customized="./", pattern_customized=".rsem.genes.norma
     return(ge)
 }
 
+#Converts UUIDs in a TCGA data matrix to TCGA barcodes. 
+convertUUID2barcode<-function(ge,path ="./"){
+    map<-read.table(paste(path, "FILE_SAMPLE_MAP.txt",sep=""),sep="\t",header=T)
+    rownames(map)<-map[,1]
+    cn<-map[colnames(ge),2]
+    colnames(ge)<-cn
+    return(ge)
+}
