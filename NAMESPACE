@@ -27,6 +27,7 @@ export(
 	summarizeFeatureSelect, #
 	coefOptimize, #
 	importTCGA,	#
+	importRPKM,	#
 	importMAF, #
 	convertUUID2barcode
 )
