@@ -31,5 +31,6 @@ export(
 	importMAF, #
 	convertUUID2barcode, #
 	plot3d, #
-	save3d
+	save3d, #
+	topfeat
 )
