@@ -32,5 +32,7 @@ export(
 	convertUUID2barcode, #
 	plot3d, #
 	save3d, #
-	topfeat
+	topfeat, #
+	eva, #
+	matrix.shuffle
 )
