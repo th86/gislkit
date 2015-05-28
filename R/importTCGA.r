@@ -47,3 +47,39 @@ convertUUID2barcode<-function(ge,path ="./"){
     return(ge)
 }
 
+#Extract the overall survival time and status of the subjects from TCGA biotab files
+importTCGASurv<-function(TCGA_CLINICAL_PATH="./"){
+fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
+
+    for(i in 1:length(fileList)){
+        cl<-read.table(paste(TCGA_CLINICAL_PATH, fileList[i],sep=""), sep="\t" , skip=1, header=1 ,row.name=1, fill=TRUE)
+
+        cancer_type_name=tolower( strsplit( strsplit(fileList[i],"[.]")[[1]][2], "_" )[[1]][4]  ) 
+
+            time_os=as.character( cl[,"days_to_death"] ) 
+            status_os=as.character( cl[,"vital_status"] ) 
+
+            time_os[which(time_os=="[Not Available]")]=NA
+            time_os[which(time_os=="[Not Applicable]")]=NA
+            time_os[which(is.na(time_os))]=as.character( cl[which(is.na(time_os)),"days_to_last_followup"] )
+
+            status_os[which(status_os=="[Not Available]")]=0
+            status_os[which(status_os=="Dead")]=1
+            status_os[which(status_os=="Alive")]=0
+            #Tai-Hsien
+            time_os=as.numeric(time_os)
+            status_os=as.numeric(status_os)
+
+            if("bcr_patient_barcode"%in% colnames(cl)){
+                names(time_os)=as.character( cl[,"bcr_patient_barcode"] )
+            }else{
+                names(time_os)=as.character( rownames(cl) )
+            }
+            names(status_os)=names(time_os)
+
+            save(time_os, status_os, file=paste(cancer_type_name, ".surv.rda", sep="") )
+            
+            cat(i, nrow(cl)-1, cancer_type_name, "\n" )
+    }
+
+}
