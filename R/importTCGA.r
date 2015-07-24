@@ -83,3 +83,65 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
     }
 
 }
+
+#Extract the age, lymphnode number, stage of the subjects from TCGA biotab files
+importTCGAclnc<-function(TCGA_CLINICAL_PATH="./"){
+fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
+
+    for(i in 1:length(fileList)){
+        cl<-read.table(paste(TCGA_CLINICAL_PATH, fileList[i],sep=""), sep="\t" , skip=1, header=1 ,row.name=1, fill=TRUE)
+
+        cancer_type_name=tolower( strsplit( strsplit(fileList[i],"[.]")[[1]][2], "_" )[[1]][4]  )
+
+            age=as.character( cl[,"age_at_initial_pathologic_diagnosis"] )
+            age[which(age=="[Not Available]")]=NA
+
+            if("lymph_node_examined_count"%in% colnames(cl)==TRUE){
+              lym_num= as.character(as.character( cl[,"lymph_node_examined_count"] ) )
+              lym_num[which(lym_num=="[Not Available]")]=NA
+              lym_num=as.numeric(lym_num)
+            }
+
+            if("pathologic_stage"%in% colnames(cl)==TRUE){
+              stage=as.character( cl[,"pathologic_stage"] )
+              stage[which(stage=="[Not Available]")]=NA
+              stage[which(stage=="Stage IV")]=4
+              stage[which(stage=="Stage III")]=3
+              stage[which(stage=="Stage IIIA")]=3
+              stage[which(stage=="Stage IIIB")]=3
+              stage[which(stage=="Stage IIIC")]=3
+              stage[which(stage=="Stage II")]=2
+              stage[which(stage=="Stage IIA")]=2
+              stage[which(stage=="Stage IIB")]=2
+              stage[which(stage=="Stage IIC")]=2
+              stage[which(stage=="Stage I")]=1
+              stage[which(stage=="Stage IA")]=1
+              stage[which(stage=="Stage IB")]=1
+              stage[which(stage=="Stage IC")]=1
+            }
+
+            clncMat=matrix(age, length(age),1  )
+            colnames(clncMat)="age"
+            if("lymph_node_examined_count"%in% colnames(cl)==TRUE){
+              clncMat=cbind(clncMat, lym_num)
+            }
+
+            if("pathologic_stage"%in% colnames(cl)==TRUE){
+              clncMat=cbind(clncMat,stage)
+            }
+
+
+            if("bcr_patient_barcode"%in% colnames(cl)){
+                rownames(clncMat)=as.character( cl[,"bcr_patient_barcode"] )
+            }else{
+                rownames(clncMat)=as.character( rownames(cl) )
+            }
+
+            clncMat=data.matrix(clncMat[2:nrow(clncMat),])
+
+            save(clncMat, file=paste(cancer_type_name, ".clnc.rda", sep="") )
+
+            cat(i, nrow(cl)-1, cancer_type_name, "\n" )
+    }
+
+}

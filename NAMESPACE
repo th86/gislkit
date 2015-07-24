@@ -29,6 +29,7 @@ export(
 	importTCGA,	#
 	importRPKM,	#
 	importMAF, #
+	importTCGAclnc, #
 	importTCGASurv, #
 	convertUUID2barcode, #
 	plot3d, #
