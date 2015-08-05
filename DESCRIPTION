@@ -6,5 +6,5 @@ Author: Tai-Hsien, Ou Yang <to2232@columbia.edu>
 Depends: R (>= 2.13), methods, e1071, survival, gbm
 Description: 
 License: GPL (>= 2)
-Built: R 3.0.2; x86_64-w64-mingw32; 2015-07-24 23:03:26 UTC; windows
+Built: R 3.0.2; x86_64-w64-mingw32; 2015-08-05 17:44:54 UTC; windows
 Archs: i386, x64

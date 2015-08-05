@@ -84,7 +84,7 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
 
 }
 
-#Extract the age, lymphnode number, stage of the subjects from TCGA biotab files
+#Adaptively extract age, lymph node number, stage, and the pathological status of the subjects from TCGA biotab files
 importTCGAclnc<-function(TCGA_CLINICAL_PATH="./"){
 fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
 
@@ -120,6 +120,50 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
               stage[which(stage=="Stage IC")]=1
             }
 
+            if("pathologic_M"%in% colnames(cl)==TRUE){
+              pM=as.character( cl[,"pathologic_M"] )
+              pM[which(pM=="[Not Available]")]=NA
+              pM[which(pM=="MX")]=0.5
+              pM[which(pM=="M0")]=0
+              pM[which(pM=="cM0 (i+)")]=0
+              pM[which(pM=="M1")]=1
+              pM[which(pM=="M1a")]=1
+              pM[which(pM=="M1b")]=1
+              pM[which(pM=="M1c")]=1
+            }
+
+            if("pathologic_N"%in% colnames(cl)==TRUE){
+              pN=as.character( cl[,"pathologic_N"] )
+              pN[which(pN=="[Not Available]")]=NA
+              pN[which(pN=="NX")]=0.5
+              pN[which(pN=="N0")]=0
+              pN[which(pN=="N1")]=1
+              pN[which(pN=="N2")]=2
+            }
+
+            if("pathologic_T"%in% colnames(cl)==TRUE){
+              pT=as.character( cl[,"pathologic_T"] )
+              pT[which(pT=="[Not Available]")]=NA
+              pT[which(pT=="TX")]=0.5
+              pT[which(pT=="T0")]=0
+              pT[which(pT=="T1")]=1
+              pT[which(pT=="T1a")]=1
+              pT[which(pT=="T1b")]=1
+              pT[which(pT=="T1c")]=1
+              pT[which(pT=="T2")]=2
+              pT[which(pT=="T2a")]=2            
+              pT[which(pT=="T2b")]=2
+              pT[which(pT=="T2c")]=2
+              pT[which(pT=="T3")]=3
+              pT[which(pT=="T3a")]=3
+              pT[which(pT=="T3b")]=3
+              pT[which(pT=="T3c")]=3                            
+              pT[which(pT=="T4")]=4
+              pT[which(pT=="T4a")]=4
+              pT[which(pT=="T4b")]=4
+              pT[which(pT=="T4c")]=4
+            }
+
             clncMat=matrix(age, length(age),1  )
             colnames(clncMat)="age"
             if("lymph_node_examined_count"%in% colnames(cl)==TRUE){
@@ -130,6 +174,17 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
               clncMat=cbind(clncMat,stage)
             }
 
+            if("pathologic_M"%in% colnames(cl)==TRUE){
+              clncMat=cbind(clncMat,pM)
+            }
+
+            if("pathologic_N"%in% colnames(cl)==TRUE){
+              clncMat=cbind(clncMat,pN)
+            }
+
+            if("pathologic_T"%in% colnames(cl)==TRUE){
+              clncMat=cbind(clncMat,pT)
+            }
 
             if("bcr_patient_barcode"%in% colnames(cl)){
                 rownames(clncMat)=as.character( cl[,"bcr_patient_barcode"] )
