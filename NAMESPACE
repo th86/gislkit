@@ -3,6 +3,7 @@ export(
 	loadExpr,		#
 	loadClin,		#
 	getMI,			#
+	getMI3,		#
 	getAllMIWz,		#
 	equalci,		#
 	exactci,		#
