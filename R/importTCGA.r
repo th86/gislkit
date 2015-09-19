@@ -105,6 +105,7 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
             if("pathologic_stage"%in% colnames(cl)==TRUE){
               stage=as.character( cl[,"pathologic_stage"] )
               stage[which(stage=="[Not Available]")]=NA
+              stage[which(stage=="Stage X")]=0
               stage[which(stage=="Stage IV")]=4
               stage[which(stage=="Stage III")]=3
               stage[which(stage=="Stage IIIA")]=3
@@ -118,6 +119,7 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
               stage[which(stage=="Stage IA")]=1
               stage[which(stage=="Stage IB")]=1
               stage[which(stage=="Stage IC")]=1
+
             }
 
             if("pathologic_M"%in% colnames(cl)==TRUE){
@@ -137,8 +139,23 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
               pN[which(pN=="[Not Available]")]=NA
               pN[which(pN=="NX")]=0.5
               pN[which(pN=="N0")]=0
+              pN[which(pN=="N0 (i-)")]=0
+              pN[which(pN=="N0 (i+)")]=0
+              pN[which(pN=="N0 (mol+)")]=0              
+              pN[which(pN=="YES")]=1
               pN[which(pN=="N1")]=1
-              pN[which(pN=="N2")]=2
+              pN[which(pN=="N1a")]=1
+              pN[which(pN=="N1b")]=1
+              pN[which(pN=="N1c")]=1            
+              pN[which(pN=="N1mi")]=1
+              pN[which(pN=="N2")]=2 
+              pN[which(pN=="N2a")]=2
+              pN[which(pN=="N2b")]=2
+              pN[which(pN=="N2c")]=2
+              pN[which(pN=="N3")]=3
+              pN[which(pN=="N3a")]=3
+              pN[which(pN=="N3b")]=3
+              pN[which(pN=="N3c")]=3
             }
 
             if("pathologic_T"%in% colnames(cl)==TRUE){
@@ -162,6 +179,7 @@ fileList=dir(path=TCGA_CLINICAL_PATH, pattern=".txt")
               pT[which(pT=="T4a")]=4
               pT[which(pT=="T4b")]=4
               pT[which(pT=="T4c")]=4
+              pT[which(pT=="T4d")]=4
             }
 
             clncMat=matrix(age, length(age),1  )
