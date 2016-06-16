@@ -38,5 +38,6 @@ export(
 	topfeat, #
 	eva, #
 	permutation.test.diff, #
-	matrix.shuffle
+	matrix.shuffle, #
+	nmf
 )
