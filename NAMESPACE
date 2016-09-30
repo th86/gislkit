@@ -4,6 +4,7 @@ export(
 	loadClin,		#
 	getMI,			#
 	getMI3,		#
+	getMI2vs1,	#
 	getAllMIWz,		#
 	equalci,		#
 	exactci,		#

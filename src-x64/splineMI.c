@@ -386,13 +386,13 @@ void mi2DiffBins(const double *x, const double *y, int *n, int *binx, int *biny,
 	*miOut = mi;
 }
 
-void mi2vs1(const double *x, const double *y, const double *z, int *n, int *bin, int *so, double *mi, int *norm){
+void mi2vs1R(const double *x, const double *y, const double *z, int *n, int *bin, int *so, double *miOut, int *norm){
   double *u = (double*) calloc(*bin + *so, sizeof(double));
   double *wx = (double*) calloc(*bin * *n, sizeof(double));
   double *wy = (double*) calloc(*bin * *n, sizeof(double));
   double *wz = (double*) calloc(*bin * *n, sizeof(double));
   double *wxy = (double*) calloc(*bin * *bin * *n, sizeof(double));
-  double e1xy, e1z, mixy, miz, largermi;
+  double e1xy, e1z, mixy, miz, largermi, mi;
 
   knotVector(u, *bin, *so);
   findWeights(x, u, wx, *n, *so, *bin, -1, -1);
@@ -404,18 +404,19 @@ void mi2vs1(const double *x, const double *y, const double *z, int *n, int *bin,
 
   e1xy = entropy1(wxy, *n, *bin * *bin);
   e1z = entropy1(wz, *n, *bin);
-  *mi = (e1xy + e1z - entropy2DiffBins(wxy, wz, *n, *bin * *bin, *bin));
+  mi = (e1xy + e1z - entropy2DiffBins(wxy, wz, *n, *bin * *bin, *bin));
   if(*norm == 1){
     mixy = 2*e1xy - entropy2(wxy, wxy, *n, *bin * *bin);
     miz = 2*e1z - entropy2(wz, wz, *n, *bin);
     largermi = mixy > miz ? mixy : miz;
     if(largermi == 0) largermi = 1;
-    *mi /= largermi;
+    mi /= largermi;
   }
 
   free(wxy);
   free(wz);
   free(u);
+  *miOut = mi;  
 }
 
 
