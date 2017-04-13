@@ -40,5 +40,10 @@ export(
 	eva, #
 	permutation.test.diff, #
 	matrix.shuffle, #
-	nmf
+	nmf,
+	maxAbsDiffTopFeatures, #
+	allMaxAbsDiffTopFeatures, #
+	findMultipleGLAttractors, #
+	findMultipleAttractors, #
+	searchGLattractors
 )
