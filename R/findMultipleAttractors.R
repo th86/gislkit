@@ -2,9 +2,9 @@
 #
 # Created by: Taihsien Ouyang (to2232@columbia.edu)
 # Reviewed by: Kaiyi Zhu (kz2232@columbia.edu)
-# Last Modified 2017 Apr. 13
+# Last Modified 2017 Apr. 19
 
-findMultipleAttractors <- function(dataMatrix, attractorObjects=NULL, a=5, maxIter = 500, epsilon=1E-7, bin = 6, so = 3, NumTopFeature=NumTopFeature, negateMI = TRUE, seedRankThreshold = 1, verbose = TRUE, filterDominatingSeed = TRUE, stopWhenMaxIterReached = FALSE){
+findMultipleAttractors <- function(dataMatrix, attractorObjects=NULL, a=5, maxIter = 500, epsilon=1E-7, bin = 6, so = 3, NumTopFeature=NumTopFeature, negateMI = TRUE, verbose = TRUE, filterDominatingSeed = TRUE, stopWhenMaxIterReached = FALSE){
 
 	if(is.null(attractorObjects$seedList) == TRUE) stop("Please provide a valid seed list.")
 
@@ -42,18 +42,10 @@ findMultipleAttractors <- function(dataMatrix, attractorObjects=NULL, a=5, maxIt
 		#Terminate iterations if either of the conditions are valid:
 		seedRank <- rank(-mi)[seedList[1]]
 
-		#The rank of the seed or the score of the seed is less than the predetermined threshold
-		if( seedRank > seedRankThreshold & iter >= 10 ) {
-			if(verbose == TRUE) cat("The process for", seedList[1], "is terminated.\n")
-		 	break
-		}
-
 		#Call the attractor converged when maximum absolute difference of the top scores between two consecutive iterations < epsilon
 		if( is.na(delta) == TRUE ) break
 
 		if( delta < epsilon ){
-			#Remove the attractors which converges within 10 iterations but the seed's rank is larger than the threshold
-			if( seedRank > seedRankThreshold & iter < 10 ) return (list(seedList=seedList[-1], attractorSignatureList=attractorSignatureList))
 
 			#If the attractor is not merged in this iteration, add the attractor to the known attractor list
 			newSignatureID = length(attractorSignatureList)+1

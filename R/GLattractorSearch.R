@@ -17,7 +17,7 @@
 #data("grch37.geneymbol") 
 #grch37_genesymbol
 
-searchGLattractors<-function(ge.raw, genome, maxIter=500, epsilon=1e-7, NumTopFeature=20, outputLength=50, windowSize=50, alpha=2, seedRankThreshold=1, strengthRange=2){
+GLattractorSearch<-function(ge.raw, genome, maxIter=500, epsilon=1e-7, NumTopFeature=20, outputLength=50, windowSize=50, alpha=2, seedRankThreshold=1, strengthRange=2){
 
 	print(ls())
 	#Prepare the reference genome
@@ -130,7 +130,7 @@ searchGLattractors<-function(ge.raw, genome, maxIter=500, epsilon=1e-7, NumTopFe
 			cat("Neighborhood",GeneList_iter,":", attractorListExt$seedList[1:min(5, attractorListExt$seedList )] ,"\n")
 		  	
 		  	while(length(attractorListExt$seedList) > 1 ){
-			   attractorListExt <- findMultipleAttractors(ge[seedListLocal,], attractorListExt,  a=alpha, maxIter=maxIter, epsilon=epsilon, bin=6, so=3, NumTopFeature=NumTopFeature, negateMI=TRUE, seedRankThreshold = length(seedListLocal), verbose=FALSE)
+			   attractorListExt <- findMultipleAttractors(ge[seedListLocal,], attractorListExt,  a=alpha, maxIter=maxIter, epsilon=epsilon, bin=6, so=3, NumTopFeature=NumTopFeature, negateMI=TRUE, verbose=FALSE)
 			    cat("Remaining seeds:",length(attractorListExt$seedList),"\tNumber of attractors:" , length(attractorListExt$attractorSignatureList) ,"\n" )
 		    }
 

@@ -45,5 +45,6 @@ export(
 	allMaxAbsDiffTopFeatures, #
 	findMultipleGLAttractors, #
 	findMultipleAttractors, #
-	searchGLattractors
+	GLattractorSearch, #
+	attractorSearch
 )
