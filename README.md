@@ -15,14 +15,14 @@ Windows users need to install [Rtools](http://cran.r-project.org/bin/windows/Rto
 
 ## Usage ##
 
-Find the attractors in a gene expression matrix ge using CENPA, PTPRC, COL3A1 as seeds.
+Find the attractors in a gene expression matrix ge using CENPA, PTPRC, COL3A1 as seeds:
 ```r
 attractorList<-attractorSearch(ge, c("CENPA","PTPRC","COL3A1"))
 ```
 The function returns a list of converged attractors.
 
 
-Find all the genomically localized attractors in a gene expression matrix
+Find all the genomically localized attractors in a gene expression matrix:
 ```r
 data(grch37.geneSymbol)
 GLattractorList<-GLattractorSearch(ge,genome=grch37_genesymbol)
