@@ -1,10 +1,9 @@
 Package: gislkit
-Version: 0.181
-Date: 2017-04-19
+Version: 0.19
+Date: 2017-05-21
 Title: gislkit
 Author: Tai-Hsien, Ou Yang <to2232@columbia.edu>
 Depends: R (>= 2.13), methods, e1071, survival, gbm
-Description: 
+Description:
 License: GPL (>= 2)
-Built: R 3.2.2; x86_64-w64-mingw32; 2017-04-19 15:51:38 UTC; windows
 Archs: i386, x64

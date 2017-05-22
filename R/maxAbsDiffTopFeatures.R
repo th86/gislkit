@@ -1,7 +1,7 @@
 #Compute the maximum absolute difference of the top genes of two vectors
 maxAbsDiffTopFeatures<-function(vectorX, vectorY, NumTopFeature=20){
 
-	topFeatureList=intersect(names(sort(vectorX, decreasing=TRUE)), names(sort(vectorX, decreasing=TRUE)) )[1:NumTopFeature]
+	topFeatureList=intersect(names(sort(vectorX, decreasing=TRUE)), names(sort(vectorY, decreasing=TRUE)) )[1:NumTopFeature]
 
 	return( max(abs(vectorX[topFeatureList] - vectorY[topFeatureList])) )
 }

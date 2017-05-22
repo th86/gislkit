@@ -419,7 +419,6 @@ void mi2vs1R(const double *x, const double *y, const double *z, int *n, int *bin
   *miOut = mi;  
 }
 
-
 void mi3(const double *x, const double *y, const double *z, int *n, int *bin, int *so, double *miOut){
 
   double *u = (double*) calloc(*bin + *so, sizeof(double));
@@ -430,7 +429,6 @@ void mi3(const double *x, const double *y, const double *z, int *n, int *bin, in
 //  double *wxy = (double*) calloc(*bin * *bin * *n, sizeof(double));
 //  double *wxz = (double*) calloc(*bin * *bin * *n, sizeof(double));
 //  double *wyz = (double*) calloc(*bin * *bin * *n, sizeof(double));
-
 
   knotVector(u, *bin, *so);
   findWeights(x, u, wx, *n, *so, *bin, -1, -1);
@@ -460,9 +458,6 @@ void mi3(const double *x, const double *y, const double *z, int *n, int *bin, in
   *miOut = mi;
 
  }
-
-
-
 
 void getAllMIWz_R(const double *data, const double* vec, double *mi, int *m, int *n, int *bin, int *so, int *norm, int *negateMI){
   double *u = (double*) calloc(*bin + *so, sizeof(double));
@@ -497,8 +492,6 @@ void getAllMIWz_R(const double *data, const double* vec, double *mi, int *m, int
   free(u);
   free(y);
 }
-
-
 
 void getAllMI3Wz_R(const double *data, const double* vec1, const double* vec2, double *mi, int *m, int *n, int *bin, int *so, int *norm, int *negateMI){
   double *u = (double*) calloc(*bin + *so, sizeof(double));
@@ -540,7 +533,6 @@ void getAllMI3Wz_R(const double *data, const double* vec1, const double* vec2, d
 
 }
 
-
 void getAllMIWz(const double *data, const double* vec, double *mi, int m, int n, int bin, int so, int norm, int negateMI){
   double *u = (double*) calloc(bin + so, sizeof(double));
   double *y = (double*) calloc(n, sizeof(double));
@@ -573,6 +565,42 @@ void getAllMIWz(const double *data, const double* vec, double *mi, int m, int n,
   free(wy);
   free(u);
   free(y);
+}
+
+void entropy2R(const double *x, const double *y, int *n, int *bin, int *so, double *eOut){
+  double *u = (double*) calloc(*bin + *so, sizeof(double));
+  double *wx = (double*) calloc(*bin * *n, sizeof(double));
+  double *wy = (double*) calloc(*bin * *n, sizeof(double));
+  double entropy;
+
+  knotVector(u, *bin, *so);
+  findWeights(x, u, wx, *n, *so, *bin, -1, -1);
+  findWeights(y, u, wy, *n, *so, *bin, -1, -1);
+  entropy = entropy2(wx, wy, *n, *bin);
+
+  free(wx);
+  free(wy);
+  free(u);
+  *eOut = entropy;
+}
+
+void centropy2R(const double *x, const double *y, int *n, int *bin, int *so, double *ceOut){
+  double *u = (double*) calloc(*bin + *so, sizeof(double));
+  double *wx = (double*) calloc(*bin * *n, sizeof(double));
+  double *wy = (double*) calloc(*bin * *n, sizeof(double));
+  double e1y, ce;
+
+  //H(X|Y) = H(X,Y) - H(Y)
+  knotVector(u, *bin, *so);
+  findWeights(x, u, wx, *n, *so, *bin, -1, -1);
+  findWeights(y, u, wy, *n, *so, *bin, -1, -1);
+  e1y = entropy1(wy, *n, *bin);
+  ce = entropy2(wx, wy, *n, *bin) - e1y;
+
+  free(wx);
+  free(wy);
+  free(u);
+  *ceOut = ce;
 }
 
 

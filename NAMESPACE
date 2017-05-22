@@ -6,6 +6,8 @@ export(
 	getMI3,		#
 	getMI2vs1,	#
 	getAllMIWz,		#
+	getEntropy,		#
+	getCEntropy,	#
 	equalci,		#
 	exactci,		#
 	bac,			#
