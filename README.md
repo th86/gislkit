@@ -1,17 +1,20 @@
 gislkit
 ====
 
-Download this package from https://github.com/th86/gislkit
 
-Uncompress this package gislkit-master.zip as a directory
+## Installation ##
 
-Install the package using the following command
+We can install Gislkit using the following commands:
+```r
+#install.packages("devtools")
+library(devtools)
+install_github("th86/gislkit")
+```
 
+Windows users may need to install [Rtools](http://cran.r-project.org/bin/windows/Rtools/) and use the following commands to install the package locally:
 ```r
 install.packages("gislkit-master", repo=NULL, type="source")
 ```
-
-Windows users need to install [Rtools](http://cran.r-project.org/bin/windows/Rtools/) beforehand.
 
 ## Usage ##
 
