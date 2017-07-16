@@ -11,11 +11,6 @@ library(devtools)
 install_github("th86/gislkit")
 ```
 
-A Windows user may need to install [Rtools](http://cran.r-project.org/bin/windows/Rtools/) and use the following command to install the package locally:
-```r
-install.packages("gislkit-master", repo=NULL, type="source")
-```
-
 ## Usage ##
 
 To find the attractors in a gene expression matrix ge using CENPA, PTPRC, COL3A1 as seeds:

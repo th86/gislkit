@@ -1,7 +1,7 @@
 #Read a numeric matrix from a csv
-csvmatrix.read<-function( fn  ){
-	ge<-read.table(fn,sep=",", header=T)
-	rn=ge[,1]
+read.csv<-function( fn  ){
+	ge<-read.table(fn, sep=",", header=T, stringsAsFactors=FALSE)
+	rn=make.unique(ge[,1])
 	ge<-data.matrix(ge[,-1])
 	rownames(ge)=rn
 	return(ge)
