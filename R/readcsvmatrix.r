@@ -1,5 +1,5 @@
 #Read a numeric matrix from a csv
-read.csv<-function( fn  ){
+read.ge<-function( fn  ){
 	ge<-read.table(fn, sep=",", header=T, stringsAsFactors=FALSE)
 	rn=make.unique(ge[,1])
 	ge<-data.matrix(ge[,-1])

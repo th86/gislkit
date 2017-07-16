@@ -20,7 +20,7 @@ export(
 	cv.gbm,			#
 	direction.correction,	#
 	fs,				#
-	read.csv,	#
+	read.ge,	#
 	biotab.read,	#
 	getGeneSymbols, #
 	attractorList.create,	#
