@@ -14,7 +14,7 @@ double meani(int*, int);
 double stdi(int*,int);
 /* void SplineKnots(int*,int,int); */
 void knotVector(double*, int, int);
-void findWeights(const double *, const double *, double *, int, int, int, double, double);
+void getWeights(const double *, const double *, double *, int, int, int, double, double);
 double entropy1(const double*, int, int);
 double entropy2(const double*, const double*, int, int);
 double mi2(const double*, const double*, int, int, int, int, int);
@@ -22,6 +22,7 @@ double mi2(const double*, const double*, int, int, int, int, int);
 
 // export R function
 void mi2R(const double *, const double *, int *, int *, int *, double *, int *, int *);
+void findWeightsR(const double *, int *, int *, int *, double *);
 void entropy1R(const double *, int *, int *, int *, double *);
 void entropy2R(const double *, const double *, int *, int *, int *, double *);
 void centropy2R(const double *, const double *, int *, int *, int *, double *);

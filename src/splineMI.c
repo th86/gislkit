@@ -221,9 +221,9 @@ double entropy1(const double *weights, int numSamples, int numBins) {
     h = 0;
     for(curSample = 0; curSample < numSamples; curSample++) h += weights[curBin * numSamples + curSample];
     h /= numSamples;
-    if (h > 0) {
-      H -= h * log2d(h);
-    }
+      if (h > 0) {
+        H -= h * log2d(h);
+      }
   }
   return H;
 }
@@ -240,7 +240,7 @@ double entropy2(const double *wx, const double *wy, int numSamples, int numBins)
       }
       h /= numSamples;
       if (h > 0) {
-	H -= h * log2d(h);
+	      H -= h * log2d(h);
       }
     }
   }
@@ -617,4 +617,17 @@ void entropy1R(const double *x, int *n, int *bin, int *so, double *eOut){
   free(wx);
   free(u);
   *eOut = entropy;
+}
+
+
+void findWeightsR(const double *x, int *n, int *bin, int *so, double *wx){
+
+  double *u = (double*) calloc(*bin + *so, sizeof(double));
+  //double *wx = (double*) calloc(*bin * *n, sizeof(double));
+
+  knotVector(u, *bin, *so);
+  findWeights(x, u, wx, *n, *so, *bin, -1, -1);
+
+  //free(wx);
+  free(u);
 }

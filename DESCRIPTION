@@ -1,6 +1,6 @@
 Package: gislkit
-Version: 0.191
-Date: 2017-07-16
+Version: 0.200
+Date: 2018-10-06
 Title: gislkit
 Author: Tai-Hsien, Ou Yang <to2232@columbia.edu>
 Depends: R (>= 3.3.1), methods, e1071, survival, gbm

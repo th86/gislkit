@@ -9,6 +9,7 @@ export(
 	getEntropy,		#
 	getCEntropy,	#
 	getOneEnt,		#
+	getWeights,	#
 	equalci,		#
 	exactci,		#
 	bac,			#
