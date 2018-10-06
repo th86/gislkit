@@ -8,6 +8,7 @@ export(
 	getAllMIWz,		#
 	getEntropy,		#
 	getCEntropy,	#
+	getOneEnt,		#
 	equalci,		#
 	exactci,		#
 	bac,			#

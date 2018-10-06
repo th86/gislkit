@@ -22,6 +22,7 @@ double mi2(const double*, const double*, int, int, int, int, int);
 
 // export R function
 void mi2R(const double *, const double *, int *, int *, int *, double *, int *, int *);
+void entropy1R(const double *, int *, int *, int *, double *);
 void entropy2R(const double *, const double *, int *, int *, int *, double *);
 void centropy2R(const double *, const double *, int *, int *, int *, double *);
 void mi2DiffBins(const double *, const double *, int *, int *, int *, int *, int *, double *, int *, int *);
